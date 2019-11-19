@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="2dp"
+    android:layout_marginTop="2dp"
+    android:foreground="@drawable/ic_touch_fg"
+    android:orientation="horizontal"
+    android:paddingBottom="10dp"
+    android:paddingEnd="16dp"
+    android:paddingStart="16dp"
+    android:paddingTop="10dp">
+
+    <ImageView
+        android:id="@+id/im_portrait"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="start|center_vertical"
+        android:src="@mipmap/user_image" />
+
+    <TextView
+        android:id="@+id/txt_name"
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:layout_gravity="start"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="52dp"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:lines="1"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textColor="#4e5864"
+        android:textSize="15sp"
+        tools:text="Mary Harmon"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="52dp" />
+
+    <TextView
+        android:id="@+id/txt_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginEnd="40dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="24dp"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:lines="1"
+        android:maxLength="32"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#8d9ca9"
+        android:textSize="12sp"
+        tools:text="Mary Harmon"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="52dp" />
+
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="end|center_vertical"
+        android:layout_marginEnd="6dp"
+        android:background="@drawable/ic_touch_bg"
+        android:contentDescription="@string/app_name"
+        android:padding="6dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_chat_bubble"
+        android:tint="#1572fc"
+        android:layout_marginRight="6dp" />
+
+</FrameLayout>

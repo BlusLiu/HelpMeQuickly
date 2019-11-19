@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 选中状态 -->
+    <item android:drawable="@drawable/my_task_item_underline" android:state_selected="true" />
+    <!--非选中状态-->
+    <item android:drawable="@drawable/my_task_color"/>
+</selector>

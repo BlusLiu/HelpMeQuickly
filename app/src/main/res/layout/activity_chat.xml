@@ -1,0 +1,91 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/colorPrimary"
+        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:background="@mipmap/chat"
+        android:id="@+id/recycler"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        >
+
+
+
+    </androidx.recyclerview.widget.RecyclerView>
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/chat_test"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@mipmap/chat"
+        android:orientation="vertical">
+
+        <include layout="@layout/list_message_l" />
+        <include layout="@layout/list_message_r" />
+        <include layout="@layout/list_message_l" />
+        <include layout="@layout/list_message_r" />
+        <include layout="@layout/list_message_r" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#e0ffffff"
+        android:orientation="horizontal"
+        android:elevation="2dp"
+        android:outlineProvider="bounds"
+        >
+        <ImageView
+            android:id="@+id/btn_face"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_emoji"
+            android:foreground="@drawable/ic_touch_fg"
+            android:tint="#4e5864" />
+        <ImageView
+            android:id="@+id/btn_record"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_record"
+            android:foreground="@drawable/ic_touch_fg"
+            android:tint="#4e5864" />
+        <EditText
+            android:id="@+id/edit_content"
+            android:background="@null"
+            android:padding="4dp"
+            android:maxHeight="68dp"
+            android:minHeight="44dp"
+            android:hint="input"
+            android:lineSpacingExtra="0dp"
+            android:lineSpacingMultiplier="1"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColorHint="#8d9ca9"
+            android:textColor="#4e5864"
+            android:textCursorDrawable="@drawable/ic_cursor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <ImageView
+            android:id="@+id/btn_submit"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:padding="8dp"
+            android:src="@drawable/ic_submit"
+            android:foreground="@drawable/ic_touch_fg"
+            android:tint="#4e5864" />
+
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.google.okhttp:okhttp:20120626@jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.okhttp/okhttp/20120626/df741883909ee49f1a9b0463953367dab899e491/okhttp-20120626.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.okhttp/okhttp/20120626/ff415f1cf0fdc734c385bdb6cf4ee70caf48a90c/okhttp-20120626-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
