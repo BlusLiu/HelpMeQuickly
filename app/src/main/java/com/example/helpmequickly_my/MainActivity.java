@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.fragment.DynamicFragment;
 import com.example.fragment.HomeFragment;
 import com.example.fragment.MessageFragment;
@@ -29,6 +30,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                Glide.get(getBaseContext()).clearDiskCache();
+//                Glide.get(getBaseContext()).clearMemory();
+//            }
+//        });
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);     //引入布局
 

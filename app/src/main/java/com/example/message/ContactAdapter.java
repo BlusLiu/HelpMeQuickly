@@ -2,6 +2,8 @@ package com.example.message;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +31,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public  class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> implements MyViewHolerClicks{
     private List<Contact> contacts;
+    private Handler handler;
     public MyViewHolerClicks myViewHolerClicks;
     private Context myContext;
     private static String TAG = "ContactAdapter";
@@ -37,8 +40,9 @@ public  class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHol
         this.myViewHolerClicks = myViewHolerClicks;
     }
 
-    public ContactAdapter(List<Contact> contacts) {
+    public ContactAdapter(List<Contact> contacts, Handler handler) {
         this.contacts = contacts;
+        this.handler = handler;
     }
 
     @NonNull
@@ -57,7 +61,10 @@ public  class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHol
             URL url = new URL("https://source.unsplash.com/40x40/");
             Log.d(TAG, "onBindViewHolder: "+url.getHost());
             myContext = MyApplication.getContext();
-            Glide.with(myContext).load("https://source.unsplash.com/40x40/").placeholder(R.mipmap.user_image).into(holder.portrait);
+            // Glide.with(myContext).load("https://source.unsplash.com/40x40/").placeholder(R.mipmap.user_image).into(holder.portrait);
+            android.os.Message message = new Message();
+            message.what = position;
+            handler.sendMessage(message);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
@@ -78,6 +85,10 @@ public  class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHol
 
     }
 
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView name;
