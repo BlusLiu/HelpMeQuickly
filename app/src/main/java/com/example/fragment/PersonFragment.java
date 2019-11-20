@@ -25,6 +25,8 @@ import com.example.helpmequickly_my.UserInfoActivity;
 import com.example.utils.InfoPrefs;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 //import com.example.helpmequickly_my.UserInfoActivity;
@@ -98,6 +100,12 @@ public class PersonFragment extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        showHeadImage();
+    }
+
     private void init(View view){
         type1 = (LinearLayout) view.findViewById(R.id.release_task);
         type2 = (LinearLayout) view.findViewById(R.id.complete_task);
@@ -109,17 +117,16 @@ public class PersonFragment extends Fragment {
                 Environment.MEDIA_MOUNTED);// 判断sdcard是否存在
         if (isSdCardExist) {
             // 忘记实例化了
-            InfoPrefs.init("user_info");
-            String path = InfoPrefs.getData(UserInfo.USER_HEAD_IMAGE);// 获取图片路径
-            //SyncStateContract.Constants._COUNT
-            File file = new File(path);
-            if (file.exists()) {
-                Bitmap bm = BitmapFactory.decodeFile(path);
-                // 将图片显示到ImageView中
-                userImage.setImageBitmap(bm);
-            }else{
-                Log.e("person","no file");
+            String localIconNormal = "user_image.png";
+            FileInputStream localStream = null;
+            try {
+                localStream = getActivity().openFileInput(localIconNormal);
+                Bitmap bitmap = BitmapFactory.decodeStream(localStream);
+                userImage.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
                 userImage.setImageResource(R.mipmap.user_image);
+                //Log.e(TAG, "no file");
             }
         } else {
             Log.e("person","no SD card");

@@ -7,8 +7,11 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -32,9 +35,14 @@ import com.example.popup.PhotoPopupWindow;
 import com.example.utils.InfoPrefs;
 import com.example.utils.PictureUtil;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.URI;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -51,7 +59,7 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
     CircleImageView circleImageView_user_head;
 
     // SyncStateContract.Constants.UserInfo.HEAD_IMAGE ???
-
+    // TODO 需要将uri和path进行改变
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,17 +157,36 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
                 Environment.MEDIA_MOUNTED);// 判断sdcard是否存在
         if (isSdCardExist) {
 
-            String path = InfoPrefs.getData(UserInfo.USER_HEAD_IMAGE);// 获取图片路径
-            //SyncStateContract.Constants._COUNT
-            File file = new File(path);
-            if (file.exists()) {
-                Bitmap bm = BitmapFactory.decodeFile(path);
-                // 将图片显示到ImageView中
-                circleImageView_user_head.setImageBitmap(bm);
-            }else{
-                Log.e(TAG,"no file");
+            String localIconNormal = "user_image.png";
+            FileInputStream localStream = null;
+            try {
+                localStream = openFileInput(localIconNormal);
+                Bitmap bitmap = BitmapFactory.decodeStream(localStream);
+                circleImageView_user_head.setImageBitmap(bitmap);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
                 circleImageView_user_head.setImageResource(R.mipmap.user_image);
+                Log.e(TAG, "no file");
             }
+
+
+
+//            String path = InfoPrefs.getData(UserInfo.USER_HEAD_IMAGE);// 获取图片路径
+//            Log.e(TAG, "path: "+ path);
+//            //SyncStateContract.Constants._COUNT
+//            File file = new File(path);
+//
+//            Uri uri =Uri.parse(path);
+//            if (file.exists()) {
+//                Bitmap bm = BitmapFactory.decodeFile(path);
+//                // 将图片显示到ImageView中
+//                circleImageView_user_head.setImageBitmap(bm);
+//
+//
+//            }else{
+//                Log.e(TAG,"no file");
+//                circleImageView_user_head.setImageResource(R.mipmap.user_image);
+//            }
         } else {
             Log.e(TAG,"no SD card");
             circleImageView_user_head.setImageResource(R.mipmap.user_image);
@@ -186,10 +213,24 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
                 case REQUEST_IMAGE_GET:
                     Log.d(TAG, "onActivityResult: " + "获取照片了！");
                     Uri uri = PictureUtil.getImageUri(this, data);
+                    Log.e(TAG, "uri: "+uri.toString());
                     try {
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
                         circleImageView_user_head.setImageBitmap(bitmap);
+                         String imgPath = uri.getPath();
+                        Log.e(TAG, "IMGPath: "+imgPath );
+
+                        String str1 = "user_image.png";
+                        FileOutputStream localFileOutputStream1 = openFileOutput(str1, 0);
+                        Bitmap.CompressFormat localCompressFormat = Bitmap.CompressFormat.PNG;
+                        bitmap.compress(localCompressFormat, 100, localFileOutputStream1);
+                        localFileOutputStream1.close();
+
+                        InfoPrefs.setData(UserInfo.USER_HEAD_IMAGE, uri.toString());
+
                     } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
 
@@ -363,6 +404,89 @@ public class UserInfoActivity extends AppCompatActivity implements View.OnClickL
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public static String getRealFilePath(final Context context, final Uri uri ) {
+        if ( null == uri ) return null;
+        final String scheme = uri.getScheme();
+        String data = null;
+        if ( scheme == null )
+            data = uri.getPath();
+        else if ( ContentResolver.SCHEME_FILE.equals( scheme ) ) {
+            data = uri.getPath();
+        } else if ( ContentResolver.SCHEME_CONTENT.equals( scheme ) ) {
+            Cursor cursor = context.getContentResolver().query( uri, new String[] { MediaStore.Images.ImageColumns.DATA }, null, null, null );
+            if ( null != cursor ) {
+                if ( cursor.moveToFirst() ) {
+                    int index = cursor.getColumnIndex( MediaStore.Images.ImageColumns.DATA );
+                    if ( index > -1 ) {
+                        data = cursor.getString( index );
+                    }
+                }
+                cursor.close();
+            }
+        }
+        return data;
+    }
+
+    private void save(String inputText){
+        FileOutputStream outputStream = null;
+        BufferedWriter writer =  null;
+
+        try {
+            outputStream = openFileOutput("data", Context.MODE_PRIVATE);
+            writer = new BufferedWriter(new OutputStreamWriter(outputStream));
+            writer.write(inputText);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (writer != null){
+                    writer.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+//    public void storePic(String tabid, String key, Bitmap bitmap) {
+//        //LogUtils.LOGD(TAG, "storePic begin tabid = " + tabid + "key = " + key);
+//        if(tabid == null || key == null || tabid.isEmpty() || key.isEmpty() || bitmap == null) {
+//            return;
+//        }
+//        FileOutputStream fos = null;
+//        try {
+//            fos = openFileOutput(tabid + "_" + key, Context.MODE_PRIVATE);
+//            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+//        } catch (FileNotFoundException e) {
+//            //LogUtils.LOGE(TAG, "storePic FileNotFoundException e = " +e);
+//        } finally {
+//            if(fos != null) {
+//                try {
+//                    fos.flush();
+//                    fos.close();
+//                } catch (IOException e) {
+//                    //LogUtils.LOGE(TAG, "storePic IOException e = " +e);
+//                }
+//            }
+//        }
+//    }
+//
+//    public Bitmap getStorePic(String tabid, String key) {
+//        //LogUtils.LOGD(TAG, "getStorePic begin tabid = " + tabid + "key = " + key);
+//        if(tabid == null || key == null || tabid.isEmpty() || key.isEmpty()) {
+//            return null;
+//        }
+//        FileInputStream fin = null;
+//        Bitmap bitmap = null;
+//        try {
+//            fin = openFileInput(tabid + "_" + key);
+//            bitmap = BitmapFactory.decodeStream(fin);
+//        } catch (FileNotFoundException e) {
+//            //LogUtils.LOGE(TAG, "getStorePic FileNotFoundException e = " + e);
+//        }
+//        return bitmap;
+//    }
+
 }
 
 
