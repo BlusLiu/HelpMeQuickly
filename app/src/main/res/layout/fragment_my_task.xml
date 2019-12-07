@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.fragment.MyTaskFragment"
     android:orientation="vertical"
     >
     <LinearLayout
@@ -64,11 +63,17 @@
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
+   <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:id="@+id/MTrecycleView"/>
+        android:id="@+id/SwipeRefreshLayout">
+          <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/MTrecycleView"/>
+          </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 
 
 </LinearLayout>

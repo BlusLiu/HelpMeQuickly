@@ -66,6 +66,8 @@ public class MessageFragment extends Fragment {
                 }
             });
             onStart();
+
+
         }
     };
 

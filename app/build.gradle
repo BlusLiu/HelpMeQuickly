@@ -43,4 +43,8 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.2.55'
     implementation 'com.google.okhttp:okhttp:20120626'
     implementation 'com.google.code.gson:gson:2.7'
+
+    compile 'cn.qqtheme.framework:WheelPicker:1.4.5'                //时间选择器
+    compile 'cn.qqtheme.framework:FilePicker:1.4.5'
+    compile 'cn.qqtheme.framework:ColorPicker:1.4.5'
 }

@@ -121,11 +121,13 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                android:id="@+id/run"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="5dp"
-                android:src="@mipmap/run" />
+                android:src="@mipmap/run"
+                android:clickable="true"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -280,12 +282,18 @@
                 android:textColor="@drawable/workitem_txt_sel"
                 android:textSize="15sp"/>
         </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list_task"
-            android:background="@color/white"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:id="@+id/homeswiperefreshlayout">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list_task"
+                android:background="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     </LinearLayout>
 </LinearLayout>

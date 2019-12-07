@@ -20,6 +20,17 @@ import java.util.List;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     private List<Task> mTasks;
+    private OnItemClickListener onItemClickListener = null;
+
+    //setter方法
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    //回调接口
+    public interface OnItemClickListener {
+        void onItemClick(View v, int position);
+    }
 
     public TaskAdapter(List<Task> mTasks) {
         this.mTasks = mTasks;
@@ -35,11 +46,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TaskAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TaskAdapter.ViewHolder holder, final int position) {
+        holder.itemView.findViewById(R.id.home_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(v, position);
+                }
+            }
+        });
         Task task = mTasks.get(position);
         holder.name.setText(task.getName());
         holder.detail.setText(task.getDetail());
-        holder.supplement.setText(task.getSupplement());
         holder.startTime.setText(task.getStartTime());
         holder.restTime.setText(task.getRestTime());
     }
@@ -52,7 +70,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView name;
         TextView detail;
-        TextView supplement;
+
         TextView startTime;
         TextView restTime;
 
@@ -60,7 +78,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             super(view);
             name = view.findViewById(R.id.name);
             detail = view.findViewById(R.id.detail);
-            supplement = view.findViewById(R.id.supplement);
             startTime = view.findViewById(R.id.start);
             restTime = view.findViewById(R.id.end);
 

@@ -11,6 +11,18 @@ public class Task {
     private String supplement;
     private String startTime;
     private String restTime;
+    private String TaskID;
+
+    public String getTaskID() {
+        return TaskID;
+    }
+
+    public void setTaskID(String taskID) {
+        TaskID = taskID;
+    }
+
+
+
 
     public Task(String name, String detail, String supplement, String startTime, String restTime) {
         this.name = name;
@@ -18,6 +30,8 @@ public class Task {
         this.supplement = supplement;
         this.startTime = startTime;
         this.restTime = restTime;
+    }
+    public Task(){
     }
 
     public String getName() {

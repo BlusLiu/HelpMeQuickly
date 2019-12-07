@@ -5,12 +5,16 @@ public class MyTask {
     private String task_state;
     private String task_detail;
     private String task_price;
+    private String task_title;
+    private String task_id;
 
-    public MyTask(String name, String state, String detail, String price) {
+    public MyTask(String name, String state, String detail, String price,String title,String taskid) {
         this.user_name = name;
         this.task_state = state;
         this.task_detail = detail;
         this.task_price = price;
+        this.task_title = title;
+        this.task_id = taskid;
     }
 
     public String getUserName() {
@@ -43,6 +47,22 @@ public class MyTask {
 
     public void setTaskPrice(String price) {
         this.task_price = price;
+    }
+
+    public String getTaskTitle(){
+        return task_title;
+    }
+
+    public void setTaskTitle(String title){
+        this.task_title = title;
+    }
+
+    public String getTaskId(){
+        return task_id;
+    }
+
+    public void setTaskId(String taskid){
+        this.task_id = taskid;
     }
 
 }

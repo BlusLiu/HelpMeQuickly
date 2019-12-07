@@ -64,7 +64,10 @@ public  class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHol
             // Glide.with(myContext).load("https://source.unsplash.com/40x40/").placeholder(R.mipmap.user_image).into(holder.portrait);
             android.os.Message message = new Message();
             message.what = position;
+
+
             handler.sendMessage(message);
+
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
